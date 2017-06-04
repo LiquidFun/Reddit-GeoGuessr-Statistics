@@ -6,9 +6,18 @@ def getDate(submission):
     time = submission.created
     return datetime.date.fromtimestamp(time)
 
-reddit = praw.Reddit(client_id='0hHzhJIBuAyRCQ', 
-			  		 client_secret='M0tboDuq3tkG2ogH7ttu7aMnQio', 
-			 		 user_agent='windows:geoguessr_comment_crawler:0.1 (by /u/LiquidProgrammer')
+# Read reddit client_id and client_secret from file (to avoid accidentally copying it)
+inputFile = open("RedditAPIAccess.txt")
+lines = []
+for line in inputFile:
+    lines.append(line)
+client_id = lines[0]
+client_secret = lines[1]
+
+# Get reddit instance
+reddit = praw.Reddit(client_id=client_id.replace('\n', ''), 
+                     client_secret=client_secret.replace('\n', ''), 
+                     user_agent='windows:geoguessr_comment_crawler:0.1 (by /u/LiquidProgrammer')
 
 subreddit = reddit.subreddit('geoguessr')
 
